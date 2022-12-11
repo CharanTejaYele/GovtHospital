@@ -38,6 +38,7 @@ function Header() {
         alignItems: "center",
       }}
       minHeight={"68px"}
+      mb="36px"
     >
       <Box display="flex" minWidth={"60px"}>
         <PregnantWomanIcon
@@ -70,7 +71,7 @@ function Header() {
         <Box display="flex" alignItems="center">
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/AddPatient")}
+            onClick={() => navigate("/GovtHospital/AddPatient")}
           >
             Add Patient
           </Button>
@@ -81,7 +82,7 @@ function Header() {
           />
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/ViewDetails?key=1")}
+            onClick={() => navigate("/GovtHospital/ViewDetails?key=1")}
           >
             1st Dose
           </Button>
@@ -92,7 +93,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/ViewDetails?key=2")}
+            onClick={() => navigate("/GovtHospital/ViewDetails?key=2")}
           >
             {" "}
             2nd Dose
@@ -104,7 +105,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/ViewDetails?key=3")}
+            onClick={() => navigate("/GovtHospital/ViewDetails?key=3")}
           >
             {" "}
             3rd Dose
@@ -116,7 +117,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/ViewDetails?key=4")}
+            onClick={() => navigate("/GovtHospital/ViewDetails?key=4")}
           >
             {" "}
             Last Dose

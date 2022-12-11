@@ -94,7 +94,7 @@ const AddPatient = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/login");
+        navigate("/GovtHospital/login");
       }
       console.log(user);
       const auth = getAuth();
