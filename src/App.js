@@ -1,10 +1,10 @@
 import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import Login from "./components/Login/Login";
 import AddPatient from "./components/AddPatient/AddPatient";
+import DisplayPatients from "./components/DisplayPatients/DisplayPatients";
 
 function App() {
   return (
@@ -12,9 +12,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/AddPatient" element={<AddPatient />}></Route>
+        <Route path="/ViewDetails" element={<DisplayPatients />}></Route>
         <Route path="/*" element={<AddPatient />}></Route>
       </Routes>
-      <Footer />
     </div>
   );
 }

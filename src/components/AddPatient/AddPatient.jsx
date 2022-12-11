@@ -1,76 +1,238 @@
-import { Button } from "@mui/material";
+import { Alert, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddPatientBox, StyledTextField } from "./AddPatient.styles";
-import { getDatabase, ref, set, update } from "firebase/database";
+import { getDatabase, ref, update } from "firebase/database";
+import Snackbar from "@mui/material/Snackbar";
+import dayjs from "dayjs";
+import { Validate } from "../Validations";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { getAuth, getIdToken, onAuthStateChanged } from "firebase/auth";
 
 const AddPatient = () => {
+  const [selectedDate, setSelectedDate] = useState("");
+  const [snackopen, setsnackopen] = useState(false);
+  const [Snackseverity, setSnackseverity] = useState("error");
+  const [SnackText, setSnackText] = useState(
+    "All the details are mandatory. Details not added to database"
+  );
+
   const [patientdetails, setpatientdetails] = useState({
     MotherName: "",
     FatherName: "",
     MotherAadharNumber: "",
     PhoneNumber: "",
-    disabled: false,
+    DOB: "",
+    Surname: "",
   });
-  const handleChange = (prop) => (event) => {
-    console.log(prop);
-    setpatientdetails({ ...patientdetails, [prop]: event.target.value });
-  };
-  const handleAddDetails = () => {
-    console.log(patientdetails);
-    setpatientdetails({ ...patientdetails, ["disabled"]: true });
 
-    const db = getDatabase();
-    update(
-      ref(db, "Patients/" + patientdetails["FatherName"] + "/" + new Date()),
-      {
+  const [Errordetails, setErrordetails] = useState({
+    MotherName: "",
+    FatherName: "",
+    MotherAadharNumber: "",
+    PhoneNumber: "",
+    DOB: "",
+    Surname: "",
+  });
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setsnackopen(false);
+  };
+
+  const handleChange = (prop) => (event) => {
+    setpatientdetails({ ...patientdetails, [prop]: event.target.value });
+    const k = Validate(patientdetails[prop], prop);
+    setErrordetails({ ...Errordetails, [prop]: k });
+  };
+
+  const onKeyDown = (e) => {
+    e.preventDefault();
+  };
+
+  const handleAddDetails = () => {
+    if (
+      patientdetails["FatherName"] !== "" &&
+      patientdetails["MotherName"] !== "" &&
+      patientdetails["MotherAadharNumber"] !== "" &&
+      patientdetails["PhoneNumber"] !== "" &&
+      patientdetails["DOB"] !== "" &&
+      Errordetails["FatherName"] === "" &&
+      Errordetails["MotherName"] === "" &&
+      Errordetails["MotherAadharNumber"] === "" &&
+      Errordetails["PhoneNumber"] === "" &&
+      Errordetails["DOB"] == ""
+    ) {
+      console.log(patientdetails);
+      const db = getDatabase();
+      console.log(ref(db,"Patients/"))
+      update(ref(db, "Patients/" + patientdetails["FatherName"]), {
         MotherName: patientdetails["MotherName"],
         FatherName: patientdetails["FatherName"],
-        "Aadhar Number": patientdetails["MotherAadharNumber"],
-      }
-    ).catch((error) => {
-      console.error(error);
-    });
-    setpatientdetails({ ...patientdetails, ["disabled"]: false });
+        AadharNumber: patientdetails["MotherAadharNumber"],
+        PhoneNumber: patientdetails["PhoneNumber"],
+        DOB: patientdetails["DOB"],
+      })
+        .catch((error) => {
+          setSnackText("Error! Cannot Add details to the server.");
+          setsnackopen(true);
+        })
+        .then(() => {
+          setSnackText("Success! The details have been added.");
+          setSnackseverity("success");
+          setsnackopen(true);
+        });
+    } else {
+      setsnackopen(true);
+    }
   };
 
   let navigate = useNavigate();
   useEffect(() => {
-    let authToken = sessionStorage.getItem("Auth Token");
-    console.log(authToken);
-    if (!authToken) {
-      navigate("/login");
-    }
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/login");
+      }
+      console.log(user);
+      const auth = getAuth();
+      getIdToken(auth, true);
+      console.log(auth);
+    });
   }, []);
 
+  const [focus, setFocused] = useState(false);
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
   return (
     <AddPatientBox>
       <StyledTextField
+        required
+        error={Errordetails["MotherAadharNumber"]}
+        helperText={
+          Errordetails["MotherAadharNumber"] === ""
+            ? ""
+            : Errordetails["MotherAadharNumber"]
+        }
+        variant="outlined"
+        label="Mother Aadhar Number"
+        sx={{ marginBottom: "20px" }}
+        onChange={handleChange("MotherAadharNumber")}
+        inputProps={{ maxLength: 12 }}
+      />
+      <StyledTextField
+        required
+        error={Errordetails["Surname"]}
+        helperText={
+          Errordetails["Surname"] === "" ? "" : Errordetails["Surname"]
+        }
+        variant="outlined"
+        label="Surname"
+        sx={{ marginBottom: "20px" }}
+        onChange={handleChange("Surname")}
+      />
+      <StyledTextField
+        required
+        error={Errordetails["MotherName"]}
+        helperText={
+          Errordetails["MotherName"] === "" ? "" : Errordetails["MotherName"]
+        }
         variant="outlined"
         label="Mother Name"
         sx={{ marginBottom: "20px" }}
         onChange={handleChange("MotherName")}
       />
       <StyledTextField
+        required
+        error={Errordetails["FatherName"]}
+        helperText={
+          Errordetails["FatherName"] === "" ? "" : Errordetails["FatherName"]
+        }
         variant="outlined"
         label="Father Name"
         sx={{ marginBottom: "20px" }}
         onChange={handleChange("FatherName")}
       />
       <StyledTextField
+        required
+        inputProps={{ maxLength: 10 }}
+        error={Errordetails["PhoneNumber"]}
+        helperText={
+          Errordetails["PhoneNumber"] === "" ? "" : Errordetails["PhoneNumber"]
+        }
         variant="outlined"
-        label="Mother Aadhar Number"
-        onChange={handleChange("MotherAadharNumber")}
+        label="Phone Number"
+        sx={{ marginBottom: "20px" }}
+        onChange={handleChange("PhoneNumber")}
       />
+      {/* <StyledTextField
+        onFocus={onFocus}
+        onBlur={onBlur}
+        required
+        InputProps={{
+          classes: {
+            input: "CustomTextField",
+          },
+        }}
+        label="Date Of Birth"
+        type={focus ? "date" : "date"}
+        onChange={handleChange("DOB")}
+      /> */}
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          label="Date Of Birth*"
+          value={patientdetails["DOB"]}
+          disableFuture
+          onChange={(date) => {
+            let dateString = "";
+            if (date !== null) {
+              dateString = new Date(date);
+            }
+            setpatientdetails({ ...patientdetails, ["DOB"]: dateString });
+            setErrordetails({
+              ...Errordetails,
+              ["DOB"]: "",
+            });
+          }}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              sx={{ width: "100%" }}
+              error={Errordetails["DOB"] ? true : false}
+              helperText={Errordetails["DOB"]}
+              onKeyDown={(e) => {
+                e.preventDefault();
+                setErrordetails({
+                  ...Errordetails,
+                  ["DOB"]: "Keyboard Input Not Accepted",
+                });
+              }}
+            />
+          )}
+        />
+      </LocalizationProvider>
 
       <Button
         variant="contained"
         sx={{ margin: "20px" }}
         onClick={handleAddDetails}
-        disabled={patientdetails["disabled"]}
+        disabled={snackopen}
       >
         Add Details
       </Button>
+      <Snackbar open={snackopen} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity={Snackseverity}
+          sx={{ width: "100%" }}
+        >
+          {SnackText}
+        </Alert>
+      </Snackbar>
     </AddPatientBox>
   );
 };
