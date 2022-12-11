@@ -11,9 +11,9 @@ function App() {
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/AddPatient" element={<AddPatient />}></Route>
-        <Route path="/ViewDetails" element={<DisplayPatients />}></Route>
+        <Route path="/GovtHospital/login" element={<Login />}></Route>
+        <Route path="/GovtHospital/AddPatient" element={<AddPatient />}></Route>
+        <Route path="/GovtHospital/ViewDetails" element={<DisplayPatients />}></Route>
         <Route path="/*" element={<AddPatient />}></Route>
       </Routes>
     </div>
