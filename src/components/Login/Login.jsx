@@ -45,7 +45,7 @@ const Login = () => {
           "Auth Token",
           response._tokenResponse.refreshToken
         );
-        navigate("/home");
+        navigate("/ViewDetails?key=1");
       }
     );
   };
