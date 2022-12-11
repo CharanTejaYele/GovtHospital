@@ -37,7 +37,6 @@ function Header() {
         backgroundColor: "#2B4162",
         alignItems: "center",
       }}
-      mb="36px"
       minHeight={"68px"}
     >
       <Box display="flex" minWidth={"60px"}>

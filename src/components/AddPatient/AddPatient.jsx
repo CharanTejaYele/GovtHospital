@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from "@mui/material";
+import { Alert, Button, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AddPatientBox, StyledTextField } from "./AddPatient.styles";
@@ -25,7 +25,6 @@ const AddPatient = () => {
     MotherAadharNumber: "",
     PhoneNumber: "",
     DOB: "",
-    Surname: "",
   });
 
   const [Errordetails, setErrordetails] = useState({
@@ -34,7 +33,6 @@ const AddPatient = () => {
     MotherAadharNumber: "",
     PhoneNumber: "",
     DOB: "",
-    Surname: "",
   });
 
   const handleClose = (event, reason) => {
@@ -110,6 +108,7 @@ const AddPatient = () => {
   const onBlur = () => setFocused(false);
   return (
     <AddPatientBox>
+      <Typography variant="h5" mb={"20px"} color="#2b4162">Add New Child</Typography>
       <StyledTextField
         required
         error={Errordetails["MotherAadharNumber"]}
@@ -123,17 +122,6 @@ const AddPatient = () => {
         sx={{ marginBottom: "20px" }}
         onChange={handleChange("MotherAadharNumber")}
         inputProps={{ maxLength: 12 }}
-      />
-      <StyledTextField
-        required
-        error={Errordetails["Surname"]}
-        helperText={
-          Errordetails["Surname"] === "" ? "" : Errordetails["Surname"]
-        }
-        variant="outlined"
-        label="Surname"
-        sx={{ marginBottom: "20px" }}
-        onChange={handleChange("Surname")}
       />
       <StyledTextField
         required
