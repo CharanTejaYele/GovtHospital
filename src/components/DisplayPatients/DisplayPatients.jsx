@@ -28,10 +28,11 @@ const db = getDatabase();
 const auth = getAuth();
 
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
+  console.log(a);
+  if (b.data.DOB < a.data.DOB) {
     return -1;
   }
-  if (b[orderBy] > a[orderBy]) {
+  if (b.data.DOB > a.data.DOB) {
     return 1;
   }
   return 0;
@@ -63,14 +64,6 @@ const headCells = [
     directrender: true,
     disablePadding: false,
     label: "Aadhar Number",
-  },
-  {
-    id: "Surname",
-    pageid: 0,
-    numeric: false,
-    directrender: true,
-    disablePadding: false,
-    label: "Surname",
   },
   {
     id: "MotherName",
@@ -298,7 +291,6 @@ export default function DisplayPatients() {
 
                     return (
                       <>
-                        {/* {console.log(moment(row.data.DOB).subtract(90, "days").format("d MMM YYYY"))} */}
                         {fun1(key, row.data.DOB) && (
                           <TableRow
                             hover
@@ -316,36 +308,33 @@ export default function DisplayPatients() {
                               {row.data.AadharNumber}
                             </TableCell>
                             <TableCell align="right">
-                              {row.data.Surname}
-                            </TableCell>{" "}
-                            <TableCell align="right">
                               {row.data.MotherName}
                             </TableCell>
                             <TableCell align="right">
                               {row.data.FatherName}
                             </TableCell>
                             <TableCell align="right">
-                              {moment(row.data.DOB).format("d MMM YYYY")}
+                              {moment(row.data.DOB).format("DD MMM YYYY")}
                             </TableCell>
                             {key == 1 && (
                               <TableCell align="right">
                                 {moment(row.data.DOB)
                                   .add(45, "days")
-                                  .format("d MMM YYYY")}
+                                  .format("DD MMM YYYY")}
                               </TableCell>
                             )}
                             {key == 2 && (
                               <TableCell align="right">
                                 {moment(row.data.DOB)
                                   .add(75, "days")
-                                  .format("d MMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
                             {key == 3 && (
                               <TableCell align="right">
                                 {moment(row.data.DOB)
                                   .add(105, "days")
-                                  .format("d MMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
                             {key == 4 && (

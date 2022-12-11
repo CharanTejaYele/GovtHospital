@@ -1,11 +1,5 @@
 export const Validate = (value, type) => {
   switch (type) {
-    case "Surname":
-      if (/^[a-zA-Z ]+$/.test(value)) {
-        return "";
-      } else {
-        return "Surname can only contain alphabet";
-      }
     case "FatherName":
       if (/^[a-zA-Z ]+$/.test(value)) {
         return "";
