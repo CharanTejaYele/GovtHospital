@@ -138,7 +138,13 @@ function EnhancedTableHead(props) {
   };
 
   return (
-    <TableHead>
+    <TableHead
+      sx={{
+        ".MuiTableCell-root": {
+          whiteSpace: "nowrap",
+        },
+      }}
+    >
       <TableRow>
         {headCells.map((headCell) => (
           <>
@@ -305,51 +311,82 @@ export default function DisplayPatients() {
                             key={row.data.MotherName}
                           >
                             <TableCell
+                              wrap="nowrap"
                               component="th"
                               id={labelId}
                               scope="row"
                               align="right"
+                              sx={{ whiteSpace: "nowrap" }}
                             >
                               {row.data.AadharNumber}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
                               {row.data.MotherName}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
                               {row.data.FatherName}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
                               {moment(row.data.DOB).format("DD MMM YYYY")}
                             </TableCell>
                             {key == 1 && (
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{
+                                  whiteSpace: "nowrap",
+                                  ".MuiTableCell-root": {
+                                    whiteSpace: "nowrap",
+                                  },
+                                }}
+                              >
                                 {moment(row.data.DOB)
                                   .add(45, "days")
                                   .format("DD MMM YYYY")}
                               </TableCell>
                             )}
                             {key == 2 && (
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{ whiteSpace: "nowrap" }}
+                              >
                                 {moment(row.data.DOB)
                                   .add(75, "days")
                                   .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
                             {key == 3 && (
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{ whiteSpace: "nowrap" }}
+                              >
                                 {moment(row.data.DOB)
                                   .add(105, "days")
                                   .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
                             {key == 4 && (
-                              <TableCell align="right">
+                              <TableCell
+                                align="right"
+                                sx={{ whiteSpace: "nowrap" }}
+                              >
                                 {moment(row.data.DOB)
                                   .add(10, "month")
                                   .format("d MMM YYYY")}{" "}
                               </TableCell>
                             )}
-                            <TableCell align="right">
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
                               {row.data.PhoneNumber}
                             </TableCell>
                           </TableRow>
