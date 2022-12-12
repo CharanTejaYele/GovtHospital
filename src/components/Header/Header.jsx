@@ -10,11 +10,43 @@ import { Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
+import styled from "@emotion/styled";
+import { margin } from "@mui/system";
+import immunization from "./immunization.png";
+import { Image } from "@mui/icons-material";
+
+const StyledHeaderBox = styled(Box)({
+  padding: "0px 36px",
+  "@media only screen and (max-width: 900px)": {
+    display: "block",
+  },
+});
+
+const StyledMenuBox = styled(Box)({
+  display: "flex",
+  "@media only screen and (max-width: 900px)": {
+    display: "grid",
+    gridTemplateColumns: "150px 150px",
+    justifyContent: "space-around",
+    gridTemplateRows: "1fr",
+    gridAutoRows: "30px",
+    padding: "20px",
+  },
+});
+
+const HeaderTitle = styled(Box)({
+  display: "flex",
+  alignItems:"center",
+  "@media only screen and (max-width: 900px)": {
+    justifyContent: "center",
+    paddingTop: "20px",
+  },
+});
 
 function Header() {
   const navigate = useNavigate();
   const BtnAddPatient = (props) => {
-    console.log(props);
+    // console.log(props);
   };
   const [LoggedIn, setLoggedIn] = useState(true);
 
@@ -30,7 +62,7 @@ function Header() {
   }, []);
 
   return (
-    <Box
+    <StyledHeaderBox
       sx={{
         display: "flex",
         justifyContent: "space-between",
@@ -40,58 +72,52 @@ function Header() {
       minHeight={"68px"}
       mb="36px"
     >
-      <Box display="flex" minWidth={"60px"}>
-        <PregnantWomanIcon
-          sx={{
-            display: { xs: "none", md: "flex" },
-            mr: 1,
-            width: "30px",
-            height: "30px",
-            color: "#e0e0e2",
-          }}
-        />
+      <HeaderTitle display="flex" minWidth={"60px"}>
+        <img src={immunization} alt="" srcset="" height={"30px"}/>
+
         <Typography
           variant="h6"
           noWrap
           sx={{
             mr: 2,
-            display: { xs: "none", md: "flex" },
+            display: { md: "flex" },
             fontWeight: 700,
+            fontSize: { xs: "1rem" },
             color: "#e0e0e2",
             textDecoration: "none",
           }}
         >
           Immunization Due Children
         </Typography>
-      </Box>
+      </HeaderTitle>
 
       {LoggedIn && (
-        <Box display="flex" alignItems="center">
+        <StyledMenuBox alignItems="center">
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/AddPatient")}
+            onClick={() => navigate("/AddPatient")}
           >
             Add Patient
           </Button>
           <Divider
             orientation="vertical"
             color="#e0e0e2"
-            sx={{ height: "30px" }}
+            sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=1")}
+            onClick={() => navigate("/ViewDetails?key=1")}
           >
             1st Dose
           </Button>
           <Divider
             orientation="vertical"
             color="#e0e0e2"
-            sx={{ height: "30px" }}
+            sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=2")}
+            onClick={() => navigate("/ViewDetails?key=2")}
           >
             {" "}
             2nd Dose
@@ -99,11 +125,11 @@ function Header() {
           <Divider
             orientation="vertical"
             color="#e0e0e2"
-            sx={{ height: "30px" }}
+            sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=3")}
+            onClick={() => navigate("/ViewDetails?key=3")}
           >
             {" "}
             3rd Dose
@@ -111,11 +137,11 @@ function Header() {
           <Divider
             orientation="vertical"
             color="#e0e0e2"
-            sx={{ height: "30px" }}
+            sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=4")}
+            onClick={() => navigate("/ViewDetails?key=4")}
           >
             {" "}
             Last Dose
@@ -123,7 +149,7 @@ function Header() {
           <Divider
             orientation="vertical"
             color="#e0e0e2"
-            sx={{ height: "30px" }}
+            sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
             sx={{ my: 2, color: "white" }}
@@ -140,9 +166,9 @@ function Header() {
           >
             Logout
           </Button>
-        </Box>
+        </StyledMenuBox>
       )}
-    </Box>
+    </StyledHeaderBox>
   );
 }
 export default Header;

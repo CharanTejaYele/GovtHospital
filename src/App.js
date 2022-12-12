@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import Header from "./components/Header/Header";
 import { Route, Routes } from "react-router-dom";
@@ -7,13 +6,14 @@ import AddPatient from "./components/AddPatient/AddPatient";
 import DisplayPatients from "./components/DisplayPatients/DisplayPatients";
 
 function App() {
+
   return (
     <div className="App">
       <Header />
       <Routes>
-        <Route path="/GovtHospital/login" element={<Login />}></Route>
-        <Route path="/GovtHospital/AddPatient" element={<AddPatient />}></Route>
-        <Route path="/GovtHospital/ViewDetails" element={<DisplayPatients />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/AddPatient" element={<AddPatient />}></Route>
+        <Route path="/ViewDetails" element={<DisplayPatients />}></Route>
         <Route path="/*" element={<AddPatient />}></Route>
       </Routes>
     </div>

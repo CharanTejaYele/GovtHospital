@@ -13,7 +13,7 @@ export const Validate = (value, type) => {
         return "Mother Name can only contain alphabet";
       }
     case "PhoneNumber":
-      console.log((value));
+      // console.log((value));
       if (/^[0-9]{9}$/.test(value)) {
         return "";
       } else {

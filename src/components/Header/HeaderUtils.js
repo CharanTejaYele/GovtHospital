@@ -11,5 +11,5 @@ export const hello = () => {
 };
 
 export const BtnAddPatient = (props) => {
-  console.log(props);
+  // console.log(props);
 };

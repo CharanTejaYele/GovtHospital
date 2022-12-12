@@ -75,12 +75,12 @@ const DisplayPatients = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/GovtHospital/login");
+        navigate("/login");
       }
-      console.log(user);
+      // console.log(user);
       const auth = getAuth();
       getIdToken(auth, true);
-      console.log(auth);
+      // console.log(auth);
     });
   }, []);
 
