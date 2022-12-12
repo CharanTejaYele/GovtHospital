@@ -28,15 +28,14 @@ const StyledMenuBox = styled(Box)({
     display: "grid",
     gridTemplateColumns: "150px 150px",
     justifyContent: "space-around",
-    gridTemplateRows: "1fr",
-    gridAutoRows: "30px",
+    gridAutoRows: "50px",
     padding: "20px",
   },
 });
 
 const HeaderTitle = styled(Box)({
   display: "flex",
-  alignItems:"center",
+  alignItems: "center",
   "@media only screen and (max-width: 900px)": {
     justifyContent: "center",
     paddingTop: "20px",
@@ -73,7 +72,7 @@ function Header() {
       mb="36px"
     >
       <HeaderTitle display="flex" minWidth={"60px"}>
-        <img src={immunization} alt="" srcset="" height={"30px"}/>
+        <img src={immunization} alt="" srcset="" height={"30px"} />
 
         <Typography
           variant="h6"
@@ -94,7 +93,19 @@ function Header() {
       {LoggedIn && (
         <StyledMenuBox alignItems="center">
           <Button
-            sx={{ color: "#e0e0e2" }}
+            sx={{
+              color: "#e0e0e2",
+              margin: "5px",
+              border: "0px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => navigate("/AddPatient")}
           >
             Add Patient
@@ -105,7 +116,19 @@ function Header() {
             sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />
           <Button
-            sx={{ color: "#e0e0e2" }}
+            sx={{
+              color: "#e0e0e2",
+              margin: "5px",
+              border: "0px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => navigate("/ViewDetails?key=1")}
           >
             1st Dose
@@ -116,7 +139,19 @@ function Header() {
             sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
-            sx={{ color: "#e0e0e2" }}
+            sx={{
+              color: "#e0e0e2",
+              margin: "5px",
+              border: "0px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => navigate("/ViewDetails?key=2")}
           >
             {" "}
@@ -128,7 +163,19 @@ function Header() {
             sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
-            sx={{ color: "#e0e0e2" }}
+            sx={{
+              color: "#e0e0e2",
+              margin: "5px",
+              border: "0px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => navigate("/ViewDetails?key=3")}
           >
             {" "}
@@ -140,7 +187,19 @@ function Header() {
             sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
-            sx={{ color: "#e0e0e2" }}
+            sx={{
+              color: "#e0e0e2",
+              margin: "5px",
+              border: "0px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => navigate("/ViewDetails?key=4")}
           >
             {" "}
@@ -152,7 +211,20 @@ function Header() {
             sx={{ height: "30px", display: { xs: "none", md: "flex" } }}
           />{" "}
           <Button
-            sx={{ my: 2, color: "white" }}
+            sx={{
+              my: 2,
+              color: "white",
+              border: "0px",
+              margin: "5px",
+              "&:hover": {
+                borderColor:"#e0e0e2"
+              },  
+              "@media only screen and (max-width: 900px)": {
+                borderColor: "#e0e0e2",
+                border: "1px solid",
+              },
+            }}
+            variant="outlined"
             onClick={() => {
               const auth = getAuth();
               signOut(auth)
