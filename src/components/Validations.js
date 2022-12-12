@@ -1,16 +1,22 @@
 export const Validate = (value, type) => {
   switch (type) {
-    case "FatherName":
+    case "WifeOf":
       if (/^[a-zA-Z ]+$/.test(value)) {
         return "";
       } else {
-        return "Father Name can only contain alphabet";
+        return "Wife Of can only contain alphabet";
       }
     case "MotherName":
       if (/^[a-zA-Z ]+$/.test(value)) {
         return "";
       } else {
         return "Mother Name can only contain alphabet";
+      }
+    case "VillageName":
+      if (/^[a-zA-Z ]+$/.test(value)) {
+        return "";
+      } else {
+        return "Village can only contain alphabet";
       }
     case "PhoneNumber":
       // console.log((value));
@@ -26,6 +32,6 @@ export const Validate = (value, type) => {
         return "Aadhar card number should contain 12 digits";
       }
     default:
-      return false;
+      return true;
   }
 };
