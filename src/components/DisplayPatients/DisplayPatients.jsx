@@ -23,12 +23,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { fun1 } from "./Data";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { Button } from "@mui/material";
 
 const db = getDatabase();
 const auth = getAuth();
 
 function descendingComparator(a, b, orderBy) {
-  console.log(a);
+  // console.log(a);
   if (b.data.DOB < a.data.DOB) {
     return -1;
   }
@@ -224,10 +226,12 @@ EnhancedTableToolbar.propTypes = {
 
 export default function DisplayPatients() {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("DOB");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [Patients, setPatients] = useState([]);
+  const ArrayLength = Object.keys(Patients).length;
+  const inputElement = React.useRef();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -247,7 +251,6 @@ export default function DisplayPatients() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Patients.length) : 0;
 
-  const userId = auth.uid;
   onValue(
     ref(db, "/Patients/"),
     (snapshot) => {
@@ -275,6 +278,7 @@ export default function DisplayPatients() {
 
   const search = useLocation().search;
   const key = new URLSearchParams(search).get("key");
+  const tableRef = React.useRef(null);
 
   return (
     <>
@@ -287,7 +291,24 @@ export default function DisplayPatients() {
           }}
         >
           <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            <DownloadTableExcel
+              filename="users table"
+              sheet="users"
+              currentTableRef={tableRef.current}
+              id="download"
+            >
+              {rowsPerPage === ArrayLength && (
+                <Button id="Download">Click Here To Download</Button>
+              )}
+            </DownloadTableExcel>
+            {rowsPerPage !== ArrayLength && (
+              <Button id="Downloadd" onClick={()=>{setRowsPerPage(ArrayLength)}}>Download</Button>
+            )}
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              ref={tableRef}
+            >
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
@@ -403,7 +424,7 @@ export default function DisplayPatients() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, ArrayLength]}
             component="div"
             count={Patients.length}
             rowsPerPage={rowsPerPage}
