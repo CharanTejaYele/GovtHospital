@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/GovtHospital/static/css/main.073c9b0a.css",
-    "main.js": "/GovtHospital/static/js/main.c4beb3a8.js",
+    "main.js": "/GovtHospital/static/js/main.cdba079b.js",
     "static/js/787.a87d9952.chunk.js": "/GovtHospital/static/js/787.a87d9952.chunk.js",
     "static/media/logo.svg": "/GovtHospital/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/GovtHospital/index.html",
     "main.073c9b0a.css.map": "/GovtHospital/static/css/main.073c9b0a.css.map",
-    "main.c4beb3a8.js.map": "/GovtHospital/static/js/main.c4beb3a8.js.map",
+    "main.cdba079b.js.map": "/GovtHospital/static/js/main.cdba079b.js.map",
     "787.a87d9952.chunk.js.map": "/GovtHospital/static/js/787.a87d9952.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.c4beb3a8.js"
+    "static/js/main.cdba079b.js"
   ]
 }
