@@ -262,7 +262,7 @@ export default function DisplayPatients() {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/GovtHospital/login");
+        navigate("/login");
       }
     });
   }, []);

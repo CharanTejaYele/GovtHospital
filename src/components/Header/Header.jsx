@@ -12,9 +12,11 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { margin } from "@mui/system";
+import immunization from "./immunization.png";
+import { Image } from "@mui/icons-material";
 
 const StyledHeaderBox = styled(Box)({
-  padding:"0px 36px",
+  padding: "0px 36px",
   "@media only screen and (max-width: 900px)": {
     display: "block",
   },
@@ -34,9 +36,10 @@ const StyledMenuBox = styled(Box)({
 
 const HeaderTitle = styled(Box)({
   display: "flex",
+  alignItems:"center",
   "@media only screen and (max-width: 900px)": {
     justifyContent: "center",
-    paddingTop:"20px"
+    paddingTop: "20px",
   },
 });
 
@@ -70,15 +73,8 @@ function Header() {
       mb="36px"
     >
       <HeaderTitle display="flex" minWidth={"60px"}>
-        <PregnantWomanIcon
-          sx={{
-            display: { md: "flex" },
-            mr: 1,
-            width: "30px",
-            height: "30px",
-            color: "#e0e0e2",
-          }}
-        />
+        <img src={immunization} alt="" srcset="" height={"30px"}/>
+
         <Typography
           variant="h6"
           noWrap
@@ -99,7 +95,7 @@ function Header() {
         <StyledMenuBox alignItems="center">
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/AddPatient")}
+            onClick={() => navigate("/AddPatient")}
           >
             Add Patient
           </Button>
@@ -110,7 +106,7 @@ function Header() {
           />
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=1")}
+            onClick={() => navigate("/ViewDetails?key=1")}
           >
             1st Dose
           </Button>
@@ -121,7 +117,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=2")}
+            onClick={() => navigate("/ViewDetails?key=2")}
           >
             {" "}
             2nd Dose
@@ -133,7 +129,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=3")}
+            onClick={() => navigate("/ViewDetails?key=3")}
           >
             {" "}
             3rd Dose
@@ -145,7 +141,7 @@ function Header() {
           />{" "}
           <Button
             sx={{ color: "#e0e0e2" }}
-            onClick={() => navigate("/GovtHospital/ViewDetails?key=4")}
+            onClick={() => navigate("/ViewDetails?key=4")}
           >
             {" "}
             Last Dose

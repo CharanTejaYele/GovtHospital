@@ -45,7 +45,7 @@ const Login = () => {
           "Auth Token",
           response._tokenResponse.refreshToken
         );
-        navigate("/GovtHospital/ViewDetails?key=1");
+        navigate("/ViewDetails?key=1");
       }
     );
   };

@@ -40,6 +40,7 @@ const AddPatient = () => {
       return;
     }
     setsnackopen(false);
+    window.location.reload();
   };
 
   const handleChange = (prop) => (event) => {
@@ -92,19 +93,18 @@ const AddPatient = () => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/GovtHospital/login");
+        navigate("/login");
       }
       const auth = getAuth();
       getIdToken(auth, true);
     });
   }, []);
 
-  const [focus, setFocused] = useState(false);
-  const onFocus = () => setFocused(true);
-  const onBlur = () => setFocused(false);
   return (
     <AddPatientBox>
-      <Typography variant="h5" mb={"20px"} color="#2b4162">Add New Child</Typography>
+      <Typography variant="h5" mb={"20px"} color="#2b4162">
+        Add New Child
+      </Typography>
       <StyledTextField
         required
         error={Errordetails["MotherAadharNumber"]}
@@ -208,7 +208,7 @@ const AddPatient = () => {
       >
         Add Details
       </Button>
-      <Snackbar open={snackopen} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={snackopen} autoHideDuration={3000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
           severity={Snackseverity}
