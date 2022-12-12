@@ -7,6 +7,7 @@ import AddPatient from "./components/AddPatient/AddPatient";
 import DisplayPatients from "./components/DisplayPatients/DisplayPatients";
 
 function App() {
+  
   return (
     <div className="App">
       <Header />
