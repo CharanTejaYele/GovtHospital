@@ -41,7 +41,7 @@ const HeaderTitle = styled(Box)({
 function Header() {
   const navigate = useNavigate();
   const BtnAddPatient = (props) => {
-    console.log(props);
+    // console.log(props);
   };
   const [LoggedIn, setLoggedIn] = useState(true);
 

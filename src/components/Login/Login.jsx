@@ -37,7 +37,7 @@ const Login = () => {
   };
 
   const HandleLogin = () => {
-    console.log(values);
+    // console.log(values);
     const auth = getAuth(app);
     signInWithEmailAndPassword(auth, values.Email, values.Password).then(
       (response) => {
