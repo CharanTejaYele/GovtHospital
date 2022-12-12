@@ -65,9 +65,7 @@ const AddPatient = () => {
       Errordetails["PhoneNumber"] === "" &&
       Errordetails["DOB"] == ""
     ) {
-      console.log(patientdetails);
       const db = getDatabase();
-      console.log(ref(db,"Patients/"))
       update(ref(db, "Patients/" + patientdetails["FatherName"]), {
         MotherName: patientdetails["MotherName"],
         FatherName: patientdetails["FatherName"],
@@ -96,10 +94,8 @@ const AddPatient = () => {
       if (!user) {
         navigate("/GovtHospital/login");
       }
-      console.log(user);
       const auth = getAuth();
       getIdToken(auth, true);
-      console.log(auth);
     });
   }, []);
 

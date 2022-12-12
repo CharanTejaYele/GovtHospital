@@ -220,7 +220,7 @@ export default function DisplayPatients() {
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [Patients, setPatients] = useState([]);
 
   const handleRequestSort = (event, property) => {
@@ -273,7 +273,13 @@ export default function DisplayPatients() {
   return (
     <>
       <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "fit-content", mb: 2, margin: "auto" }}>
+        <Paper
+          sx={{
+            width: { md: "fit-content" },
+            mb: 2,
+            margin: { xs: "16px", md: "auto" },
+          }}
+        >
           <TableContainer>
             <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
               <EnhancedTableHead
@@ -302,7 +308,6 @@ export default function DisplayPatients() {
                               component="th"
                               id={labelId}
                               scope="row"
-                              padding="none"
                               align="right"
                             >
                               {row.data.AadharNumber}
