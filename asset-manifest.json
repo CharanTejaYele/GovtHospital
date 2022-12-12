@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/GovtHospital/static/css/main.073c9b0a.css",
-    "main.js": "/GovtHospital/static/js/main.ac8c72d7.js",
+    "main.js": "/GovtHospital/static/js/main.b73974f8.js",
     "static/js/787.a87d9952.chunk.js": "/GovtHospital/static/js/787.a87d9952.chunk.js",
     "static/media/immunization.png": "/GovtHospital/static/media/immunization.b9a2c3c03a8c203bb2fc.png",
     "index.html": "/GovtHospital/index.html",
     "main.073c9b0a.css.map": "/GovtHospital/static/css/main.073c9b0a.css.map",
-    "main.ac8c72d7.js.map": "/GovtHospital/static/js/main.ac8c72d7.js.map",
+    "main.b73974f8.js.map": "/GovtHospital/static/js/main.b73974f8.js.map",
     "787.a87d9952.chunk.js.map": "/GovtHospital/static/js/787.a87d9952.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.073c9b0a.css",
-    "static/js/main.ac8c72d7.js"
+    "static/js/main.b73974f8.js"
   ]
 }
