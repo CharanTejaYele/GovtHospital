@@ -14,27 +14,29 @@ import styled from "@emotion/styled";
 import { margin } from "@mui/system";
 
 const StyledHeaderBox = styled(Box)({
-  "@media only screen and (max-width: 600px)": {
+  padding:"0px 36px",
+  "@media only screen and (max-width: 900px)": {
     display: "block",
   },
 });
 
 const StyledMenuBox = styled(Box)({
   display: "flex",
-  "@media only screen and (max-width: 600px)": {
+  "@media only screen and (max-width: 900px)": {
     display: "grid",
     gridTemplateColumns: "150px 150px",
     justifyContent: "space-around",
     gridTemplateRows: "1fr",
-    gridAutoRows:"30px",
-    padding:"20px"
+    gridAutoRows: "30px",
+    padding: "20px",
   },
 });
 
 const HeaderTitle = styled(Box)({
   display: "flex",
-  "@media only screen and (max-width: 600px)": {
+  "@media only screen and (max-width: 900px)": {
     justifyContent: "center",
+    paddingTop:"20px"
   },
 });
 
