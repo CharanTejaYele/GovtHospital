@@ -21,18 +21,20 @@ const AddPatient = () => {
 
   const [patientdetails, setpatientdetails] = useState({
     MotherName: "",
-    FatherName: "",
+    WifeOf: "",
     MotherAadharNumber: "",
     PhoneNumber: "",
-    DOB: "",
+    DOD: "",
+    VillageName: "",
   });
 
   const [Errordetails, setErrordetails] = useState({
     MotherName: "",
-    FatherName: "",
+    WifeOf: "",
     MotherAadharNumber: "",
     PhoneNumber: "",
-    DOB: "",
+    DOD: "",
+    VillageName: "",
   });
 
   const handleClose = (event, reason) => {
@@ -45,8 +47,7 @@ const AddPatient = () => {
 
   const handleChange = (prop) => (event) => {
     setpatientdetails({ ...patientdetails, [prop]: event.target.value });
-    const k = Validate(patientdetails[prop], prop);
-    setErrordetails({ ...Errordetails, [prop]: k });
+    setErrordetails({ ...Errordetails, [prop]: "" });
   };
 
   const onKeyDown = (e) => {
@@ -54,25 +55,36 @@ const AddPatient = () => {
   };
 
   const handleAddDetails = () => {
+    for (const key in patientdetails) {
+      const k = Validate(patientdetails[key], key);
+      // console.log(key, ":", k);
+      setErrordetails((prevState) => ({
+        ...prevState,
+        [key]: k,
+      }));
+    }
     if (
-      patientdetails["FatherName"] !== "" &&
+      patientdetails["WifeOf"] !== "" &&
       patientdetails["MotherName"] !== "" &&
       patientdetails["MotherAadharNumber"] !== "" &&
       patientdetails["PhoneNumber"] !== "" &&
-      patientdetails["DOB"] !== "" &&
-      Errordetails["FatherName"] === "" &&
+      patientdetails["DOD"] !== "" &&
+      patientdetails["VillageName"] !== "" &&
+      Errordetails["WifeOf"] === "" &&
       Errordetails["MotherName"] === "" &&
       Errordetails["MotherAadharNumber"] === "" &&
       Errordetails["PhoneNumber"] === "" &&
-      Errordetails["DOB"] == ""
+      Errordetails["VillageName"] === "" &&
+      Errordetails["DOD"] == ""
     ) {
       const db = getDatabase();
-      update(ref(db, "Patients/" + patientdetails["FatherName"]), {
+      update(ref(db, "Patients/" + patientdetails["WifeOf"]), {
         MotherName: patientdetails["MotherName"],
-        FatherName: patientdetails["FatherName"],
+        WifeOf: patientdetails["WifeOf"],
         AadharNumber: patientdetails["MotherAadharNumber"],
         PhoneNumber: patientdetails["PhoneNumber"],
-        DOB: patientdetails["DOB"],
+        DOD: patientdetails["DOD"],
+        VillageName: patientdetails["VillageName"],
       })
         .catch((error) => {
           setSnackText("Error! Cannot Add details to the server.");
@@ -107,6 +119,17 @@ const AddPatient = () => {
       </Typography>
       <StyledTextField
         required
+        error={Errordetails["VillageName"]}
+        helperText={
+          Errordetails["VillageName"] === "" ? "" : Errordetails["VillageName"]
+        }
+        variant="outlined"
+        label="Village Name"
+        sx={{ marginBottom: "20px" }}
+        onChange={handleChange("VillageName")}
+      />
+      <StyledTextField
+        required
         error={Errordetails["MotherAadharNumber"]}
         helperText={
           Errordetails["MotherAadharNumber"] === ""
@@ -132,14 +155,12 @@ const AddPatient = () => {
       />
       <StyledTextField
         required
-        error={Errordetails["FatherName"]}
-        helperText={
-          Errordetails["FatherName"] === "" ? "" : Errordetails["FatherName"]
-        }
+        error={Errordetails["WifeOf"]}
+        helperText={Errordetails["WifeOf"] === "" ? "" : Errordetails["WifeOf"]}
         variant="outlined"
-        label="Father Name"
+        label="Wife Of"
         sx={{ marginBottom: "20px" }}
-        onChange={handleChange("FatherName")}
+        onChange={handleChange("WifeOf")}
       />
       <StyledTextField
         required
@@ -164,35 +185,35 @@ const AddPatient = () => {
         }}
         label="Date Of Birth"
         type={focus ? "date" : "date"}
-        onChange={handleChange("DOB")}
+        onChange={handleChange("DOD")}
       /> */}
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
-          label="Date Of Birth*"
-          value={patientdetails["DOB"]}
+          label="Date Of Delivery*"
+          value={patientdetails["DOD"]}
           disableFuture
           onChange={(date) => {
             let dateString = "";
             if (date !== null) {
               dateString = new Date(date);
             }
-            setpatientdetails({ ...patientdetails, ["DOB"]: dateString });
+            setpatientdetails({ ...patientdetails, ["DOD"]: dateString });
             setErrordetails({
               ...Errordetails,
-              ["DOB"]: "",
+              ["DOD"]: "",
             });
           }}
           renderInput={(params) => (
             <TextField
               {...params}
               sx={{ width: "100%" }}
-              error={Errordetails["DOB"] ? true : false}
-              helperText={Errordetails["DOB"]}
+              error={Errordetails["DOD"] ? true : false}
+              helperText={Errordetails["DOD"]}
               onKeyDown={(e) => {
                 e.preventDefault();
                 setErrordetails({
                   ...Errordetails,
-                  ["DOB"]: "Keyboard Input Not Accepted",
+                  ["DOD"]: "Keyboard Input Not Accepted",
                 });
               }}
             />

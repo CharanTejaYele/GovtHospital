@@ -102,7 +102,7 @@ const DisplayPatients = () => {
                   Mother Aadhar Number
                 </StyledTableCell>
                 <StyledTableCell align="center">Mother Name</StyledTableCell>
-                <StyledTableCell align="center">Father Name</StyledTableCell>
+                <StyledTableCell align="center">Wife Of</StyledTableCell>
                 <StyledTableCell align="center">Date Of Birth</StyledTableCell>
                 <StyledTableCell align="center">Phone Number</StyledTableCell>
               </TableRow>
@@ -117,10 +117,10 @@ const DisplayPatients = () => {
                     {patient.data.MotherName}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {patient.data.FatherName}
+                    {patient.data.WifeOf}
                   </StyledTableCell>
                   <StyledTableCell align="center">
-                    {moment(patient.data.DOB).format("d MMM YYYY")}
+                    {moment(patient.data.DOD).format("d MMM YYYY")}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     {patient.data.PhoneNumber}

@@ -23,16 +23,18 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { fun1 } from "./Data";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { Button } from "@mui/material";
 
 const db = getDatabase();
 const auth = getAuth();
 
 function descendingComparator(a, b, orderBy) {
-  console.log(a);
-  if (b.data.DOB < a.data.DOB) {
+  // console.log(a);
+  if (b.data.DOD < a.data.DOD) {
     return -1;
   }
-  if (b.data.DOB > a.data.DOB) {
+  if (b.data.DOD > a.data.DOD) {
     return 1;
   }
   return 0;
@@ -58,6 +60,22 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: "S.No",
+    pageid: 0,
+    numeric: false,
+    directrender: true,
+    disablePadding: false,
+    label: "Serial Number",
+  },
+  {
+    id: "VillageName",
+    pageid: 0,
+    numeric: false,
+    directrender: true,
+    disablePadding: false,
+    label: "Village Name",
+  },
+  {
     id: "AadharNumber",
     pageid: 0,
     numeric: false,
@@ -74,20 +92,20 @@ const headCells = [
     label: "Mother Name",
   },
   {
-    id: "FatherName",
+    id: "WifeOf",
     pageid: 0,
     numeric: false,
     directrender: true,
     disablePadding: false,
-    label: "Father Name",
+    label: "Wife Of",
   },
   {
-    id: "DOB",
+    id: "DOD",
     pageid: 0,
     numeric: false,
     directrender: true,
     disablePadding: false,
-    label: "DOB",
+    label: "Date Of Delivery",
   },
   {
     id: "1stDose",
@@ -134,7 +152,7 @@ const headCells = [
 function EnhancedTableHead(props) {
   const { order, orderBy, onRequestSort, pagekey } = props;
   const createSortHandler = (property) => (event) => {
-    if (property === "DOB") onRequestSort(event, property);
+    if (property === "DOD") onRequestSort(event, property);
   };
 
   return (
@@ -157,7 +175,7 @@ function EnhancedTableHead(props) {
                 sortDirection={orderBy === headCell.id ? order : false}
                 sx={{ fontWeight: "600" }}
               >
-                {headCell.id === "DOB" ? (
+                {headCell.id === "DOD" ? (
                   <TableSortLabel
                     active={orderBy === headCell.id}
                     direction={orderBy === headCell.id ? order : "asc"}
@@ -224,10 +242,12 @@ EnhancedTableToolbar.propTypes = {
 
 export default function DisplayPatients() {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("DOD");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [Patients, setPatients] = useState([]);
+  const ArrayLength = Object.keys(Patients).length;
+  const inputElement = React.useRef();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -247,7 +267,6 @@ export default function DisplayPatients() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Patients.length) : 0;
 
-  const userId = auth.uid;
   onValue(
     ref(db, "/Patients/"),
     (snapshot) => {
@@ -275,6 +294,8 @@ export default function DisplayPatients() {
 
   const search = useLocation().search;
   const key = new URLSearchParams(search).get("key");
+  const tableRef = React.useRef(null);
+  let SerialNumber = 0;
 
   return (
     <>
@@ -287,7 +308,31 @@ export default function DisplayPatients() {
           }}
         >
           <TableContainer>
-            <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+            <DownloadTableExcel
+              filename="users table"
+              sheet="users"
+              currentTableRef={tableRef.current}
+              id="download"
+            >
+              {rowsPerPage >= ArrayLength && (
+                <Button id="Download">Click Here To Download</Button>
+              )}
+            </DownloadTableExcel>
+            {rowsPerPage < ArrayLength && (
+              <Button
+                id="Downloadd"
+                onClick={() => {
+                  setRowsPerPage(ArrayLength);
+                }}
+              >
+                Download
+              </Button>
+            )}
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              ref={tableRef}
+            >
               <EnhancedTableHead
                 order={order}
                 orderBy={orderBy}
@@ -300,16 +345,35 @@ export default function DisplayPatients() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
-
                     return (
                       <>
-                        {fun1(key, row.data.DOB) && (
+                        {fun1(key, row.data.DOD) && (
                           <TableRow
                             hover
                             role="checkbox"
                             tabIndex={-1}
                             key={row.data.MotherName}
                           >
+                            <TableCell
+                              wrap="nowrap"
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              align="center"
+                              sx={{ whiteSpace: "nowrap", fontWeight: "600" }}
+                            >
+                              {(SerialNumber += 1)}
+                            </TableCell>
+                            <TableCell
+                              wrap="nowrap"
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
+                              {row.data.VillageName}
+                            </TableCell>
                             <TableCell
                               wrap="nowrap"
                               component="th"
@@ -330,13 +394,13 @@ export default function DisplayPatients() {
                               align="right"
                               sx={{ whiteSpace: "nowrap" }}
                             >
-                              {row.data.FatherName}
+                              {row.data.WifeOf}
                             </TableCell>
                             <TableCell
                               align="right"
                               sx={{ whiteSpace: "nowrap" }}
                             >
-                              {moment(row.data.DOB).format("DD MMM YYYY")}
+                              {moment(row?.data?.DOD).format("DD MMM YYYY")}
                             </TableCell>
                             {key == 1 && (
                               <TableCell
@@ -348,8 +412,8 @@ export default function DisplayPatients() {
                                   },
                                 }}
                               >
-                                {moment(row.data.DOB)
-                                  .add(45, "days")
+                                {moment(row.data.DOD)
+                                  .add(6, "w")
                                   .format("DD MMM YYYY")}
                               </TableCell>
                             )}
@@ -358,8 +422,8 @@ export default function DisplayPatients() {
                                 align="right"
                                 sx={{ whiteSpace: "nowrap" }}
                               >
-                                {moment(row.data.DOB)
-                                  .add(75, "days")
+                                {moment(row.data.DOD)
+                                  .add(10, "w")
                                   .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
@@ -368,8 +432,8 @@ export default function DisplayPatients() {
                                 align="right"
                                 sx={{ whiteSpace: "nowrap" }}
                               >
-                                {moment(row.data.DOB)
-                                  .add(105, "days")
+                                {moment(row.data.DOD)
+                                  .add(14, "w")
                                   .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
@@ -378,7 +442,7 @@ export default function DisplayPatients() {
                                 align="right"
                                 sx={{ whiteSpace: "nowrap" }}
                               >
-                                {moment(row.data.DOB)
+                                {moment(row.data.DOD)
                                   .add(10, "month")
                                   .format("d MMM YYYY")}{" "}
                               </TableCell>
@@ -403,7 +467,7 @@ export default function DisplayPatients() {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, ArrayLength]}
             component="div"
             count={Patients.length}
             rowsPerPage={rowsPerPage}
