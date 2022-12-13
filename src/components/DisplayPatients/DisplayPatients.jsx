@@ -60,6 +60,14 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: "S.No",
+    pageid: 0,
+    numeric: false,
+    directrender: true,
+    disablePadding: false,
+    label: "Serial Number",
+  },
+  {
     id: "VillageName",
     pageid: 0,
     numeric: false,
@@ -287,6 +295,7 @@ export default function DisplayPatients() {
   const search = useLocation().search;
   const key = new URLSearchParams(search).get("key");
   const tableRef = React.useRef(null);
+  let SerialNumber = 0;
 
   return (
     <>
@@ -336,7 +345,6 @@ export default function DisplayPatients() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     const labelId = `enhanced-table-checkbox-${index}`;
-
                     return (
                       <>
                         {fun1(key, row.data.DOD) && (
@@ -346,6 +354,16 @@ export default function DisplayPatients() {
                             tabIndex={-1}
                             key={row.data.MotherName}
                           >
+                            <TableCell
+                              wrap="nowrap"
+                              component="th"
+                              id={labelId}
+                              scope="row"
+                              align="center"
+                              sx={{ whiteSpace: "nowrap", fontWeight: "600" }}
+                            >
+                              {(SerialNumber += 1)}
+                            </TableCell>
                             <TableCell
                               wrap="nowrap"
                               component="th"

@@ -20,18 +20,18 @@ export const Validate = (value, type) => {
       }
     case "PhoneNumber":
       // console.log((value));
-      if (/^[0-9]{9}$/.test(value)) {
+      if (/^[0-9]{10}$/.test(value)) {
         return "";
       } else {
         return "Phone Number should contain 10 digits";
       }
     case "MotherAadharNumber":
-      if (/^[0-9]{11}$/.test(value)) {
+      if (/^[0-9]{12}$/.test(value)) {
         return "";
       } else {
         return "Aadhar card number should contain 12 digits";
       }
     default:
-      return true;
+      return "";
   }
 };

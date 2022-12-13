@@ -47,8 +47,7 @@ const AddPatient = () => {
 
   const handleChange = (prop) => (event) => {
     setpatientdetails({ ...patientdetails, [prop]: event.target.value });
-    const k = Validate(patientdetails[prop], prop);
-    setErrordetails({ ...Errordetails, [prop]: k });
+    setErrordetails({ ...Errordetails, [prop]: "" });
   };
 
   const onKeyDown = (e) => {
@@ -56,6 +55,14 @@ const AddPatient = () => {
   };
 
   const handleAddDetails = () => {
+    for (const key in patientdetails) {
+      const k = Validate(patientdetails[key], key);
+      // console.log(key, ":", k);
+      setErrordetails((prevState) => ({
+        ...prevState,
+        [key]: k,
+      }));
+    }
     if (
       patientdetails["WifeOf"] !== "" &&
       patientdetails["MotherName"] !== "" &&
@@ -77,7 +84,7 @@ const AddPatient = () => {
         AadharNumber: patientdetails["MotherAadharNumber"],
         PhoneNumber: patientdetails["PhoneNumber"],
         DOD: patientdetails["DOD"],
-        VillageName: patientdetails["VillageName"]
+        VillageName: patientdetails["VillageName"],
       })
         .catch((error) => {
           setSnackText("Error! Cannot Add details to the server.");
@@ -112,7 +119,6 @@ const AddPatient = () => {
       </Typography>
       <StyledTextField
         required
-        inputProps={{ maxLength: 10 }}
         error={Errordetails["VillageName"]}
         helperText={
           Errordetails["VillageName"] === "" ? "" : Errordetails["VillageName"]
