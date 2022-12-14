@@ -1,4 +1,4 @@
-import { getDatabase, onValue, ref } from "firebase/database";
+import { child, get, getDatabase, ref } from "firebase/database";
 import { useState } from "react";
 import * as React from "react";
 import PropTypes from "prop-types";
@@ -25,9 +25,6 @@ import moment from "moment";
 import { fun1 } from "./Data";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { Button } from "@mui/material";
-
-const db = getDatabase();
-const auth = getAuth();
 
 function descendingComparator(a, b, orderBy) {
   // console.log(a);
@@ -59,14 +56,6 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  {
-    id: "S.No",
-    pageid: 0,
-    numeric: false,
-    directrender: true,
-    disablePadding: false,
-    label: "Serial Number",
-  },
   {
     id: "VillageName",
     pageid: 0,
@@ -247,7 +236,6 @@ export default function DisplayPatients() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [Patients, setPatients] = useState([]);
   const ArrayLength = Object.keys(Patients).length;
-  const inputElement = React.useRef();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -267,21 +255,41 @@ export default function DisplayPatients() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - Patients.length) : 0;
 
-  onValue(
-    ref(db, "/Patients/"),
-    (snapshot) => {
-      let patients = [];
-      snapshot.forEach((childSnapshop) => {
-        let KeyName = childSnapshop.key;
-        let data = childSnapshop.val();
-        patients.push({ key: KeyName, data: data });
-      });
-      setPatients(patients);
-    },
-    {
-      onlyOnce: true,
-    }
-  );
+  // onValue(
+  //   ref(db, "/Patients/"),
+  //   (snapshot) => {
+  //     let patients = [];
+  //     snapshot.forEach((childSnapshop) => {
+  //       let KeyName = childSnapshop.key;
+  //       let data = childSnapshop.val();
+  //       patients.push({ key: KeyName, data: data });
+  //     });
+  //     setPatients(patients);
+  //   },
+  //   {
+  //     onlyOnce: true,
+  //   }
+  // );
+
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `/Patients/`))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        let patients = [];
+        snapshot.forEach((childSnapshop) => {
+          let KeyName = childSnapshop.key;
+          let data = childSnapshop.val();
+          patients.push({ key: KeyName, data: data });
+        });
+        setPatients(patients);
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
   let navigate = useNavigate();
   React.useEffect(() => {
     const auth = getAuth();
@@ -295,7 +303,6 @@ export default function DisplayPatients() {
   const search = useLocation().search;
   const key = new URLSearchParams(search).get("key");
   const tableRef = React.useRef(null);
-  let SerialNumber = 0;
 
   return (
     <>
@@ -354,16 +361,6 @@ export default function DisplayPatients() {
                             tabIndex={-1}
                             key={row.data.MotherName}
                           >
-                            <TableCell
-                              wrap="nowrap"
-                              component="th"
-                              id={labelId}
-                              scope="row"
-                              align="center"
-                              sx={{ whiteSpace: "nowrap", fontWeight: "600" }}
-                            >
-                              {(SerialNumber += 1)}
-                            </TableCell>
                             <TableCell
                               wrap="nowrap"
                               component="th"
@@ -444,7 +441,7 @@ export default function DisplayPatients() {
                               >
                                 {moment(row.data.DOD)
                                   .add(10, "month")
-                                  .format("d MMM YYYY")}{" "}
+                                  .format("DD MMM YYYY")}{" "}
                               </TableCell>
                             )}
                             <TableCell
@@ -460,7 +457,7 @@ export default function DisplayPatients() {
                   })}
                 {emptyRows > 0 && (
                   <TableRow>
-                    <TableCell colSpan={6} />
+                    <TableCell colSpan={8} />
                   </TableRow>
                 )}
               </TableBody>

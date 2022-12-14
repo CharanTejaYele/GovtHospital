@@ -4,15 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { AddPatientBox, StyledTextField } from "./AddPatient.styles";
 import { getDatabase, ref, update } from "firebase/database";
 import Snackbar from "@mui/material/Snackbar";
-import dayjs from "dayjs";
-import { Validate } from "../Validations";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { getAuth, getIdToken, onAuthStateChanged } from "firebase/auth";
 
 const AddPatient = () => {
-  const [selectedDate, setSelectedDate] = useState("");
   const [snackopen, setsnackopen] = useState(false);
   const [Snackseverity, setSnackseverity] = useState("error");
   const [SnackText, setSnackText] = useState(
@@ -50,32 +47,14 @@ const AddPatient = () => {
     setErrordetails({ ...Errordetails, [prop]: "" });
   };
 
-  const onKeyDown = (e) => {
-    e.preventDefault();
-  };
-
   const handleAddDetails = () => {
-    for (const key in patientdetails) {
-      const k = Validate(patientdetails[key], key);
-      // console.log(key, ":", k);
-      setErrordetails((prevState) => ({
-        ...prevState,
-        [key]: k,
-      }));
-    }
     if (
       patientdetails["WifeOf"] !== "" &&
       patientdetails["MotherName"] !== "" &&
       patientdetails["MotherAadharNumber"] !== "" &&
       patientdetails["PhoneNumber"] !== "" &&
       patientdetails["DOD"] !== "" &&
-      patientdetails["VillageName"] !== "" &&
-      Errordetails["WifeOf"] === "" &&
-      Errordetails["MotherName"] === "" &&
-      Errordetails["MotherAadharNumber"] === "" &&
-      Errordetails["PhoneNumber"] === "" &&
-      Errordetails["VillageName"] === "" &&
-      Errordetails["DOD"] == ""
+      patientdetails["VillageName"] !== ""
     ) {
       const db = getDatabase();
       update(ref(db, "Patients/" + patientdetails["WifeOf"]), {
@@ -119,7 +98,7 @@ const AddPatient = () => {
       </Typography>
       <StyledTextField
         required
-        error={Errordetails["VillageName"]}
+        error={Errordetails["VillageName"] !== ""}
         helperText={
           Errordetails["VillageName"] === "" ? "" : Errordetails["VillageName"]
         }
@@ -130,7 +109,7 @@ const AddPatient = () => {
       />
       <StyledTextField
         required
-        error={Errordetails["MotherAadharNumber"]}
+        error={Errordetails["MotherAadharNumber"] !== ""}
         helperText={
           Errordetails["MotherAadharNumber"] === ""
             ? ""
@@ -144,7 +123,7 @@ const AddPatient = () => {
       />
       <StyledTextField
         required
-        error={Errordetails["MotherName"]}
+        error={Errordetails["MotherName"] !== ""}
         helperText={
           Errordetails["MotherName"] === "" ? "" : Errordetails["MotherName"]
         }
@@ -155,7 +134,7 @@ const AddPatient = () => {
       />
       <StyledTextField
         required
-        error={Errordetails["WifeOf"]}
+        error={Errordetails["WifeOf"] !== ""}
         helperText={Errordetails["WifeOf"] === "" ? "" : Errordetails["WifeOf"]}
         variant="outlined"
         label="Wife Of"
@@ -165,7 +144,7 @@ const AddPatient = () => {
       <StyledTextField
         required
         inputProps={{ maxLength: 10 }}
-        error={Errordetails["PhoneNumber"]}
+        error={Errordetails["PhoneNumber"] !== ""}
         helperText={
           Errordetails["PhoneNumber"] === "" ? "" : Errordetails["PhoneNumber"]
         }
@@ -197,10 +176,10 @@ const AddPatient = () => {
             if (date !== null) {
               dateString = new Date(date);
             }
-            setpatientdetails({ ...patientdetails, ["DOD"]: dateString });
+            setpatientdetails({ ...patientdetails, DOD: dateString });
             setErrordetails({
               ...Errordetails,
-              ["DOD"]: "",
+              DOD: "",
             });
           }}
           renderInput={(params) => (
@@ -213,7 +192,7 @@ const AddPatient = () => {
                 e.preventDefault();
                 setErrordetails({
                   ...Errordetails,
-                  ["DOD"]: "Keyboard Input Not Accepted",
+                  DOD: "Keyboard Input Not Accepted",
                 });
               }}
             />

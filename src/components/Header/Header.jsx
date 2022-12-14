@@ -72,7 +72,7 @@ function Header() {
       mb="36px"
     >
       <HeaderTitle display="flex" minWidth={"60px"}>
-        <img src={immunization} alt="" srcset="" height={"30px"} />
+        <img src={immunization} alt="" height={"30px"} />
 
         <Typography
           variant="h6"
@@ -98,7 +98,7 @@ function Header() {
               margin: "5px",
               border: "0px",
               "&:hover": {
-                borderColor:"#e0e0e2"
+                borderColor: "#e0e0e2",
               },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
@@ -121,7 +121,7 @@ function Header() {
               margin: "5px",
               border: "0px",
               "&:hover": {
-                borderColor:"#e0e0e2"
+                borderColor: "#e0e0e2",
               },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
@@ -144,7 +144,7 @@ function Header() {
               margin: "5px",
               border: "0px",
               "&:hover": {
-                borderColor:"#e0e0e2"
+                borderColor: "#e0e0e2",
               },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
@@ -168,7 +168,7 @@ function Header() {
               margin: "5px",
               border: "0px",
               "&:hover": {
-                borderColor:"#e0e0e2"
+                borderColor: "#e0e0e2",
               },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
@@ -192,7 +192,7 @@ function Header() {
               margin: "5px",
               border: "0px",
               "&:hover": {
-                borderColor:"#e0e0e2"
+                borderColor: "#e0e0e2",
               },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
@@ -217,8 +217,8 @@ function Header() {
               border: "0px",
               margin: "5px",
               "&:hover": {
-                borderColor:"#e0e0e2"
-              },  
+                borderColor: "#e0e0e2",
+              },
               "@media only screen and (max-width: 900px)": {
                 borderColor: "#e0e0e2",
                 border: "1px solid",
