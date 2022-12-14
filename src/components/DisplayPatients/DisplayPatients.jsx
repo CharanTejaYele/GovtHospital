@@ -275,13 +275,13 @@ export default function DisplayPatients() {
   get(child(dbRef, `/Patients/`))
     .then((snapshot) => {
       if (snapshot.exists()) {
-        let patients = [];
+        let patient = [];
         snapshot.forEach((childSnapshop) => {
           let KeyName = childSnapshop.key;
           let data = childSnapshop.val();
-          patients.push({ key: KeyName, data: data });
+          if (fun1(key, data.DOD)) patient.push({ key: KeyName, data: data });
         });
-        setPatients(patients);
+        setPatients(patient);
       } else {
         console.log("No data available");
       }
@@ -354,104 +354,102 @@ export default function DisplayPatients() {
                     const labelId = `enhanced-table-checkbox-${index}`;
                     return (
                       <>
-                        {fun1(key, row.data.DOD) && (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            tabIndex={-1}
-                            key={row.data.MotherName}
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={row.data.MotherName}
+                        >
+                          <TableCell
+                            wrap="nowrap"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
                           >
+                            {row.data.VillageName}
+                          </TableCell>
+                          <TableCell
+                            wrap="nowrap"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
+                          >
+                            {row.data.AadharNumber}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
+                          >
+                            {row.data.MotherName}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
+                          >
+                            {row.data.WifeOf}
+                          </TableCell>
+                          <TableCell
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
+                          >
+                            {moment(row?.data?.DOD).format("DD MMM YYYY")}
+                          </TableCell>
+                          {key == 1 && (
                             <TableCell
-                              wrap="nowrap"
-                              component="th"
-                              id={labelId}
-                              scope="row"
                               align="right"
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              {row.data.VillageName}
-                            </TableCell>
-                            <TableCell
-                              wrap="nowrap"
-                              component="th"
-                              id={labelId}
-                              scope="row"
-                              align="right"
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              {row.data.AadharNumber}
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              {row.data.MotherName}
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              {row.data.WifeOf}
-                            </TableCell>
-                            <TableCell
-                              align="right"
-                              sx={{ whiteSpace: "nowrap" }}
-                            >
-                              {moment(row?.data?.DOD).format("DD MMM YYYY")}
-                            </TableCell>
-                            {key == 1 && (
-                              <TableCell
-                                align="right"
-                                sx={{
+                              sx={{
+                                whiteSpace: "nowrap",
+                                ".MuiTableCell-root": {
                                   whiteSpace: "nowrap",
-                                  ".MuiTableCell-root": {
-                                    whiteSpace: "nowrap",
-                                  },
-                                }}
-                              >
-                                {moment(row.data.DOD)
-                                  .add(6, "w")
-                                  .format("DD MMM YYYY")}
-                              </TableCell>
-                            )}
-                            {key == 2 && (
-                              <TableCell
-                                align="right"
-                                sx={{ whiteSpace: "nowrap" }}
-                              >
-                                {moment(row.data.DOD)
-                                  .add(10, "w")
-                                  .format("DD MMM YYYY")}{" "}
-                              </TableCell>
-                            )}
-                            {key == 3 && (
-                              <TableCell
-                                align="right"
-                                sx={{ whiteSpace: "nowrap" }}
-                              >
-                                {moment(row.data.DOD)
-                                  .add(14, "w")
-                                  .format("DD MMM YYYY")}{" "}
-                              </TableCell>
-                            )}
-                            {key == 4 && (
-                              <TableCell
-                                align="right"
-                                sx={{ whiteSpace: "nowrap" }}
-                              >
-                                {moment(row.data.DOD)
-                                  .add(10, "month")
-                                  .format("DD MMM YYYY")}{" "}
-                              </TableCell>
-                            )}
+                                },
+                              }}
+                            >
+                              {moment(row.data.DOD)
+                                .add(6, "w")
+                                .format("DD MMM YYYY")}
+                            </TableCell>
+                          )}
+                          {key == 2 && (
                             <TableCell
                               align="right"
                               sx={{ whiteSpace: "nowrap" }}
                             >
-                              {row.data.PhoneNumber}
+                              {moment(row.data.DOD)
+                                .add(10, "w")
+                                .format("DD MMM YYYY")}{" "}
                             </TableCell>
-                          </TableRow>
-                        )}
+                          )}
+                          {key == 3 && (
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
+                              {moment(row.data.DOD)
+                                .add(14, "w")
+                                .format("DD MMM YYYY")}{" "}
+                            </TableCell>
+                          )}
+                          {key == 4 && (
+                            <TableCell
+                              align="right"
+                              sx={{ whiteSpace: "nowrap" }}
+                            >
+                              {moment(row.data.DOD)
+                                .add(10, "month")
+                                .format("DD MMM YYYY")}{" "}
+                            </TableCell>
+                          )}
+                          <TableCell
+                            align="right"
+                            sx={{ whiteSpace: "nowrap" }}
+                          >
+                            {row.data.PhoneNumber}
+                          </TableCell>
+                        </TableRow>
                       </>
                     );
                   })}
