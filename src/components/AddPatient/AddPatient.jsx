@@ -15,6 +15,7 @@ const AddPatient = () => {
   const [SnackText, setSnackText] = useState(
     "All the details are mandatory. Details not added to database"
   );
+  const [errors, setErrors] = useState(false);
 
   const [patientdetails, setpatientdetails] = useState({
     MotherName: "",
@@ -75,7 +76,7 @@ const AddPatient = () => {
           setsnackopen(true);
         });
     } else {
-      setsnackopen(true);
+      setErrors(true);
     }
   };
 
@@ -96,6 +97,11 @@ const AddPatient = () => {
       <Typography variant="h5" mb={"20px"} color="#2b4162">
         Add New Child
       </Typography>
+      {errors && (
+        <Typography varient="h6" mb={"20px"} color="red">
+          *Cannot submit! All details are mandatory*
+        </Typography>
+      )}
       <StyledTextField
         required
         error={Errordetails["VillageName"] !== ""}
